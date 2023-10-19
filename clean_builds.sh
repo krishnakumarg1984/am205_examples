@@ -26,5 +26,6 @@ find . -name "CPackConfig.cmake" -print -delete 2>/dev/null
 # find . -iname "MakeFile" -print -delete 2>/dev/null
 find . -iname "hello.txt" -print -delete 2>/dev/null
 find . -iname "hello.data" -print -delete 2>/dev/null
+find . -name ".mypy_cache" -type d -ls -delete
 
 echo "Removed build-output files. DONE!"

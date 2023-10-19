@@ -1,31 +1,32 @@
 #!/usr/bin/python3
-from math import *
+
+from math import exp
+
 import numpy as np
 
 # Initialize x points and function values
-n=5
-x=np.linspace(0,3,n)
-y=np.array([exp(-q) for q in x])
+n = 5
+x = np.linspace(0, 3, n)
+y = np.array([exp(-q) for q in x])
 
 # Solve Vandermonde problem
-V=np.vander(x)
-b=np.linalg.solve(V,y)
+V = np.vander(x)
+b = np.linalg.solve(V, y)
 
 # Add optional random perturbation
-#b+=1e-6*np.random.rand(n)
+# b+=1e-6*np.random.rand(n)
 
 # Plot interpolant
-xx=0
-while xx<3:
-
+xx = 0.0
+while xx < 3:
     # Use Horner's method to construct polynomial. Note that because of
     # Python's Vandermonde ordering convention, b[0] holds the coefficient of
     # the highest power.
-    yy=b[0]
-    for i in range(1,n):
-        yy*=xx
-        yy+=b[i]
+    yy = b[0]
+    for i in range(1, n):
+        yy *= xx
+        yy += b[i]
 
     # Print output and increment x position
-    print(xx,yy,exp(-xx),yy-exp(-xx))
-    xx+=0.01
+    print(xx, yy, exp(-xx), yy - exp(-xx))
+    xx += 0.01
