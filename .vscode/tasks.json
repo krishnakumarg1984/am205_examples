@@ -1,0 +1,680 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "C-script run C++ source (C++17). See 'https://github.com/ryanmjacobs/c'",
+      "type": "shell",
+      "command": "c",
+      "args": [
+        "${file}",
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++17",
+        "-Wall",
+        "-Wcast-align",
+        "-Wcast-qual",
+        "-Wconversion",
+        "-Wctor-dtor-privacy",
+        "-Wdeprecated-copy-dtor",
+        "-Wdouble-promotion",
+        // "-Wduplicated-branches", // only in g++. Not available in clang++
+        "-Weffc++",
+        "-Wextra",
+        "-Wextra-semi",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wformat-signedness",
+        "-Wformat-truncation=2",
+        "-Wframe-larger-than=5000",
+        // "-Wl",
+        // "-Wmissing-prototypes", // not valid for C++ projects?
+        "-Wnon-virtual-dtor",
+        "-Wnull-dereference", // only in g++. Not in clang++
+        "-Wold-style-cast",
+        "-Woverloaded-virtual",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wsign-conversion",
+        "-Wsign-promo",
+        "-Wstrict-aliasing",
+        // "-Wstrict-prototypes", // not valid for C++ projects?
+        "-Wswitch-default",
+        "-Wswitch-enum",
+        "-Wundef",
+        "-Wunused-macros",
+        "-O0",
+        "-D_FORTIFY_SOURCE=1",
+        // "-g3",
+        // "-ggdb",
+        "-ggdb3",
+        "-gsplit-dwarf",
+        // "-fanalyzer", // -fanalyzer is currently not working properly with C++ and is not recommended to be used on C++ code. A meta bug tracking C++ issues can be found here. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=97110 https://stackoverflow.com/a/73913076
+        "-fanalyzer-transitivity",
+        "-fasynchronous-unwind-tables",
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-fno-sanitize-recover",
+        "-fsanitize=address",
+        "-fsanitize=bool",
+        // "-fsanitize=integer", // not valid in gcc
+        "-fsanitize=float-cast-overflow",
+        "-fsanitize=float-divide-by-zero",
+        "-fsanitize=signed-integer-overflow",
+        // "-fsanitize=undefined", // triggers debugging errors in clang++
+        // "-fsanitize-trap", // not valid in gcc
+        "-fstack-clash-protection",
+        "-fstack-protector-all",
+        "-fstack-protector-strong",
+        "-fstrict-aliasing",
+        "-fvisibility=hidden",
+        "-DDEBUG",
+        "-D_GLIBCXX_DEBUG",
+        "-DDBG_MACRO_NO_WARNING"
+        // "-DDBG_MACRO_DISABLE"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Run compiled executable",
+      "type": "shell",
+      "command": "${fileDirname}/${fileBasenameNoExtension}.x",
+      "windows": {
+        "command": "${fileDirname}/${fileBasenameNoExtension}.exe"
+      },
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "Clean executable",
+      "type": "shell",
+      "command": "rm ${fileDirname}/${fileBasenameNoExtension}.x 2>/dev/null",
+      // "windows": {
+      //   // "command": "del ${fileDirname}/${fileBasenameNoExtension}.exe 2>nul;del ${fileDirname}/${fileBasenameNoExtension}.exp 2>nul;del ${fileDirname}/${fileBasenameNoExtension}.lib 2>nul;del ${fileDirname}/${fileBasenameNoExtension}.pdb 2>nul"
+      //   // "command": "Remove-Item -Path ${fileDirname}/${fileBasenameNoExtension}.exe ; Remove-Item -Path ${fileDirname}/${fileBasenameNoExtension}.exp ; Remove-Item -Path ${fileDirname}/${fileBasenameNoExtension}.lib ; Remove-Item -Path ${fileDirname}/${fileBasenameNoExtension}.pdb "
+      //   "command": "if (test-path ${fileDirname}/${fileBasenameNoExtension}.exe) {
+      //   remove-item ${fileDirname}/${fileBasenameNoExtension}.exe
+      // };
+      //   if (test-path ${fileDirname}/${fileBasenameNoExtension}.exp) {
+      //   remove-item ${fileDirname}/${fileBasenameNoExtension}.exp
+      // };
+      //   if (test-path ${fileDirname}/${fileBasenameNoExtension}.lib) {
+      //   remove-item ${fileDirname}/${fileBasenameNoExtension}.lib
+      // };
+      //   if (test-path ${fileDirname}/${fileBasenameNoExtension}.pdb) {
+      //   remove-item ${fileDirname}/${fileBasenameNoExtension}.pdb
+      // };
+      //   "
+      // },
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++20 debug build) with g++",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++23",
+        "-Wall",
+        "-Wcast-align",
+        "-Wcast-qual",
+        "-Wconversion",
+        "-Wctor-dtor-privacy",
+        "-Wdeprecated-copy-dtor",
+        "-Wdouble-promotion",
+        "-Wduplicated-branches", // only in g++. Not available in clang++
+        "-Wduplicated-cond", // only in g++. Not available in clang++
+        "-Weffc++",
+        "-Wextra",
+        "-Wextra-semi",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wformat-signedness",
+        "-Wformat-truncation=2",
+        "-Wframe-larger-than=5000",
+        // "-Wl",
+        "-Wlogical-op", // only in g++. Not available in clang++
+        "-Wmisleading-indentation", // already enabled in clang++ through -Wall
+        // "-Wmissing-prototypes",  // not valid in g++ (for C++ projects)
+        "-Wnon-virtual-dtor",
+        "-Wnull-dereference", // only in g++. Not in clang++
+        "-Wold-style-cast",
+        "-Woverloaded-virtual",
+        "-Wpedantic",
+        "-Wreturn-local-addr", // -Wreturn-stack-address in clang++
+        "-Wshadow",
+        // "-Wsign-conversion", // -Wsign-compare is g++ equivalent and is already enabled by -Wall in clang++
+        "-Wsign-promo",
+        "-Wstrict-aliasing",
+        // "-Wstrict-prototypes", // not valid for C++ projects?
+        "-Wswitch-default",
+        "-Wswitch-enum",
+        "-Wundef",
+        "-Wunused-macros",
+        "-Wuseless-cast", // only in g++. Not available in clang++
+        "-O0",
+        "-D_FORTIFY_SOURCE=1",
+        // "-g3",
+        // "-ggdb",
+        "-ggdb3",
+        "-gsplit-dwarf",
+        // "-fanalyzer", // -fanalyzer is currently not working properly with C++ and is not recommended to be used on C++ code. A meta bug tracking C++ issues can be found here. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=97110 https://stackoverflow.com/a/73913076
+        "-fanalyzer-transitivity",
+        "-fasynchronous-unwind-tables",
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-fno-sanitize-recover",
+        "-fsanitize=address",
+        "-static-libasan",
+        "-fsanitize=bool",
+        // "-fsanitize=integer", // not valid in gcc
+        "-fsanitize=float-cast-overflow",
+        "-fsanitize=float-divide-by-zero",
+        "-fsanitize=signed-integer-overflow",
+        "-fsanitize=undefined", // triggers debugging errors in clang++
+        // "-fsanitize-trap",  // not valid in gcc
+        "-fstack-clash-protection",
+        "-fstack-protector-all",
+        "-fstack-protector-strong",
+        "-fstrict-aliasing",
+        "-fvisibility=hidden",
+        "-DDEBUG",
+        "-D_GLIBCXX_DEBUG",
+        "-DDBG_MACRO_NO_WARNING",
+        // "-DDBG_MACRO_DISABLE",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++20 debug build) with clang++",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++20",
+        "-Wall",
+        "-Wcast-align",
+        "-Wcast-qual",
+        "-Wconversion",
+        "-Wctor-dtor-privacy",
+        "-Wdeprecated-copy-dtor",
+        "-Wdouble-promotion",
+        "-Weffc++",
+        "-Wextra",
+        "-Wextra-semi",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wimplicit-fallthrough", // only in clang++. Already in g++ as -Wextra
+        // "-Wl",
+        // "-Wmissing-prototypes", // not valid for C++ projects?
+        "-Wnon-virtual-dtor",
+        "-Wnull-dereference",
+        "-Wold-style-cast",
+        "-Woverloaded-virtual",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wsign-conversion", // not required in g++, but required here for clang++
+        "-Wsign-promo",
+        "-Wstrict-aliasing",
+        "-Wstrict-prototypes",
+        "-Wswitch-default",
+        "-Wswitch-enum",
+        "-Wundef",
+        "-Wunused-macros",
+        "-O0",
+        "-D_FORTIFY_SOURCE=1",
+        // "-g3",
+        // "-ggdb",
+        // "-ggdb3",
+        "-glldb",
+        "-gsplit-dwarf",
+        "-fasynchronous-unwind-tables",
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-fno-sanitize-recover",
+        "-fsanitize=address", // seems to be problematic with clang++ (readelf shows up unrecognized form warnings)
+        "-fsanitize=bool",
+        // "-fsanitize=integer", // not valid in gcc
+        "-fsanitize=float-cast-overflow",
+        "-fsanitize=float-divide-by-zero",
+        "-fsanitize=signed-integer-overflow",
+        // "-fsanitize=undefined", // triggers debugging errors in clang++
+        "-fsanitize-trap", // not valid in gcc
+        // "-fstack-clash-protection", // not valid in clang
+        "-fstack-protector-all",
+        "-fstack-protector-strong",
+        "-fstrict-aliasing",
+        "-fvisibility=hidden",
+        "-DDEBUG",
+        "-D_GLIBCXX_DEBUG",
+        "-DDBG_MACRO_NO_WARNING",
+        // "-DDBG_MACRO_DISABLE",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "windows": {
+        "args": [
+          "-Iplog/include/",
+          "-pedantic-errors", // disable compiler extensions
+          "-pipe",
+          "-std=c++20",
+          "-Wall",
+          "-Wcast-align",
+          "-Wcast-qual",
+          "-Wconversion",
+          "-Wctor-dtor-privacy",
+          "-Wdeprecated-copy-dtor",
+          "-Wdouble-promotion",
+          "-Weffc++",
+          "-Wextra",
+          "-Wextra-semi",
+          "-Wfloat-equal",
+          "-Wformat=2",
+          "-Wimplicit-fallthrough", // only in clang++. Already in g++ as -Wextra
+          // "-Wl",
+          // "-Wmissing-prototypes", // not valid for C++ projects?
+          "-Wnon-virtual-dtor",
+          "-Wnull-dereference",
+          "-Wold-style-cast",
+          "-Woverloaded-virtual",
+          "-Wpedantic",
+          "-Wshadow",
+          "-Wsign-conversion", // not required in g++, but required here for clang++
+          "-Wsign-promo",
+          "-Wstrict-aliasing",
+          "-Wstrict-prototypes",
+          "-Wswitch-default",
+          "-Wswitch-enum",
+          "-Wundef",
+          "-Wunused-macros",
+          "-O0",
+          "-D_FORTIFY_SOURCE=1",
+          // "-g3",
+          // "-ggdb",
+          // "-ggdb3",
+          "-glldb",
+          "-gsplit-dwarf",
+          "-fasynchronous-unwind-tables",
+          "-fexceptions",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover",
+          // "-fsanitize=address",
+          "-fsanitize=bool",
+          // "-fsanitize=integer", // not valid in gcc
+          "-fsanitize=float-cast-overflow",
+          "-fsanitize=float-divide-by-zero",
+          "-fsanitize=signed-integer-overflow",
+          // "-fsanitize=undefined", // triggers debugging errors in clang++
+          "-fsanitize-trap", // not valid in gcc
+          // "-fstack-clash-protection", // not valid in clang
+          "-fstack-protector-all",
+          "-fstack-protector-strong",
+          "-fstrict-aliasing",
+          "-fvisibility=hidden",
+          "-DDEBUG",
+          "-D_GLIBCXX_DEBUG",
+          "-DDBG_MACRO_NO_WARNING",
+          // "-DDBG_MACRO_DISABLE",
+          "${file}",
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension}.exe"
+        ]
+      },
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++20 release build) with g++",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++20",
+        "-Wall",
+        "-Weffc++",
+        "-Wextra",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        // "-Wl",
+        "-Wpedantic",
+        "-Wreturn-local-addr", // -Wreturn-stack-address in clang++
+        "-O2",
+        "-D_FORTIFY_SOURCE=2",
+        "-DNDEBUG",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++20 release build) with clang++",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++20",
+        "-Wall",
+        "-Weffc++",
+        "-Wextra",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wimplicit-fallthrough",
+        // "-Wl",
+        "-Wpedantic",
+        "-O2",
+        "-D_FORTIFY_SOURCE=2",
+        "-DNDEBUG",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++23 debug build) with g++ 13",
+      "type": "shell",
+      "command": "g++-13",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++23",
+        "-Wall",
+        "-Wcast-align",
+        "-Wcast-qual",
+        "-Wconversion",
+        "-Wctor-dtor-privacy",
+        "-Wdeprecated-copy-dtor",
+        "-Wdouble-promotion",
+        "-Wduplicated-branches", // only in g++. Not available in clang++
+        "-Wduplicated-cond", // only in g++. Not available in clang++
+        "-Weffc++",
+        "-Wextra",
+        "-Wextra-semi",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wformat-signedness",
+        "-Wformat-truncation=2",
+        "-Wframe-larger-than=5000",
+        // "-Wl",
+        "-Wlogical-op", // only in g++. Not available in clang++
+        "-Wmisleading-indentation", // already enabled in clang++ through -Wall
+        // "-Wmissing-prototypes",  // not valid in g++ (for C++ projects)
+        "-Wnon-virtual-dtor",
+        "-Wnull-dereference", // only in g++. Not in clang++
+        "-Wold-style-cast",
+        "-Woverloaded-virtual",
+        "-Wpedantic",
+        "-Wreturn-local-addr", // -Wreturn-stack-address in clang++
+        "-Wshadow",
+        // "-Wsign-conversion", // -Wsign-compare is g++ equivalent and is already enabled by -Wall
+        "-Wsign-promo",
+        "-Wstrict-aliasing",
+        // "-Wstrict-prototypes", // not valid for C++ projects?
+        "-Wswitch-default",
+        "-Wswitch-enum",
+        "-Wundef",
+        "-Wunused-macros",
+        "-O0",
+        "-D_FORTIFY_SOURCE=1",
+        // "-g3",
+        // "-ggdb",
+        "-ggdb3",
+        "-gsplit-dwarf",
+        // "-fanalyzer", // -fanalyzer is currently not working properly with C++ and is not recommended to be used on C++ code. A meta bug tracking C++ issues can be found here. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=97110 https://stackoverflow.com/a/73913076
+        "-fanalyzer-transitivity",
+        "-fasynchronous-unwind-tables",
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-fno-sanitize-recover",
+        "-fsanitize=address",
+        "-static-libasan",
+        "-fsanitize=bool",
+        // "-fsanitize=integer", // not valid in gcc
+        "-fsanitize=float-cast-overflow",
+        "-fsanitize=float-divide-by-zero",
+        "-fsanitize=signed-integer-overflow",
+        "-fsanitize=undefined", // triggers debugging errors in clang++
+        // "-fsanitize-trap",  // not valid in gcc
+        "-fstack-clash-protection",
+        "-fstack-protector-all",
+        "-fstack-protector-strong",
+        "-fstrict-aliasing",
+        "-fvisibility=hidden",
+        "-DDEBUG",
+        "-D_GLIBCXX_DEBUG",
+        "-DDBG_MACRO_NO_WARNING",
+        // "-DDBG_MACRO_DISABLE",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Compile file to produce executable (C++23 debug build) with clang++",
+      "type": "shell",
+      "command": "clang++",
+      "args": [
+        "-Iplog/include/",
+        "-pedantic-errors", // disable compiler extensions
+        "-pipe",
+        "-std=c++2b",
+        "-Wall",
+        "-Wcast-align",
+        "-Wcast-qual",
+        "-Wconversion",
+        "-Wctor-dtor-privacy",
+        "-Wdeprecated-copy-dtor",
+        "-Wdouble-promotion",
+        "-Weffc++",
+        "-Wextra",
+        "-Wextra-semi",
+        "-Wfloat-equal",
+        "-Wformat=2",
+        "-Wimplicit-fallthrough",
+        // "-Wl",
+        // "-Wmissing-prototypes", // not valid for C++ projects?
+        "-Wnon-virtual-dtor",
+        "-Wnull-dereference",
+        "-Wold-style-cast",
+        "-Woverloaded-virtual",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wsign-conversion", // not required in g++, but required here for clang++
+        "-Wsign-promo",
+        "-Wstrict-aliasing",
+        "-Wstrict-prototypes",
+        "-Wswitch-default",
+        "-Wswitch-enum",
+        "-Wundef",
+        "-Wunused-macros",
+        "-Wuseless-cast", // only in g++. Not available in clang++
+        "-O0",
+        "-D_FORTIFY_SOURCE=1",
+        // "-g3",
+        // "-ggdb",
+        // "-ggdb3",
+        "-glldb",
+        "-gsplit-dwarf",
+        "-fasynchronous-unwind-tables",
+        "-fexceptions",
+        "-fno-omit-frame-pointer",
+        "-fno-sanitize-recover",
+        "-fsanitize=address", // seems to be problematic with clang++ (readelf shows up unrecognized form warnings)
+        "-fsanitize=bool",
+        // "-fsanitize=integer", // not valid in gcc
+        "-fsanitize=float-cast-overflow",
+        "-fsanitize=float-divide-by-zero",
+        "-fsanitize=signed-integer-overflow",
+        // "-fsanitize=undefined", // triggers debugging errors in clang++
+        "-fsanitize-trap", // not valid in gcc
+        // "-fstack-clash-protection", // not valid in clang
+        "-fstack-protector-all",
+        "-fstack-protector-strong",
+        "-fstrict-aliasing",
+        "-fvisibility=hidden",
+        "-DDEBUG",
+        "-D_GLIBCXX_DEBUG",
+        "-DDBG_MACRO_NO_WARNING",
+        // "-DDBG_MACRO_DISABLE",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.x"
+      ],
+      "windows": {
+        "args": [
+          "-Iplog/include/",
+          "-pedantic-errors", // disable compiler extensions
+          "-pipe",
+          "-std=c++20",
+          "-Wall",
+          "-Wcast-align",
+          "-Wcast-qual",
+          "-Wconversion",
+          "-Wctor-dtor-privacy",
+          "-Wdeprecated-copy-dtor",
+          "-Wdouble-promotion",
+          "-Weffc++",
+          "-Wextra",
+          "-Wextra-semi",
+          "-Wfloat-equal",
+          "-Wformat=2",
+          "-Wimplicit-fallthrough",
+          // "-Wl",
+          // "-Wmissing-prototypes", // not valid for C++ projects?
+          "-Wnon-virtual-dtor",
+          "-Wnull-dereference",
+          "-Wold-style-cast",
+          "-Woverloaded-virtual",
+          "-Wpedantic",
+          "-Wshadow",
+          "-Wsign-conversion", // not required in g++, but required here for clang++
+          "-Wsign-promo",
+          "-Wstrict-aliasing",
+          "-Wstrict-prototypes",
+          "-Wswitch-default",
+          "-Wswitch-enum",
+          "-Wundef",
+          "-Wunused-macros",
+          "-O0",
+          "-D_FORTIFY_SOURCE=1",
+          // "-g3",
+          // "-ggdb",
+          // "-ggdb3",
+          "-glldb",
+          "-gsplit-dwarf",
+          "-fasynchronous-unwind-tables",
+          "-fexceptions",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover",
+          // "-fsanitize=address",
+          "-fsanitize=bool",
+          // "-fsanitize=integer", // not valid in gcc
+          "-fsanitize=float-cast-overflow",
+          "-fsanitize=float-divide-by-zero",
+          "-fsanitize=signed-integer-overflow",
+          // "-fsanitize=undefined", // triggers debugging errors in clang++
+          "-fsanitize-trap", // not valid in gcc
+          // "-fstack-clash-protection", // not valid in clang
+          "-fstack-protector-all",
+          "-fstack-protector-strong",
+          "-fstrict-aliasing",
+          "-fvisibility=hidden",
+          "-DDEBUG",
+          "-D_GLIBCXX_DEBUG",
+          "-DDBG_MACRO_NO_WARNING",
+          // "-DDBG_MACRO_DISABLE",
+          "${file}",
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension}.exe"
+        ]
+      },
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": "$gcc",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+    // {
+    //     "label": "Compile to produce executable (C++20 debug build) and run",
+    //     "type": "shell",
+    //     "dependsOrder": "sequence",
+    //     "dependsOn": ["Compile file (C++20 debug build)", "Run executable"],
+    //     "options": {
+    //         "cwd": "${fileDirname}"
+    //     },
+    // },
+    // {
+    //     "label": "Compile to produce executable (C++20 release build) and run",
+    //     "type": "shell",
+    //     "dependsOrder": "sequence",
+    //     "dependsOn": ["Compile file (C++20 release build)", "Run executable"],
+    //     "options": {
+    //         "cwd": "${fileDirname}"
+    //     },
+    // },
+  ]
+}

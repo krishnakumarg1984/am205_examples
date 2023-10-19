@@ -1,0 +1,82 @@
+---
+
+CompileFlags:
+  # Tweak the parse settings
+  Add:
+    [
+      "-xc++",
+      "-Idoctest",
+      "-Iplog/include",
+      "-Icustom_functions",
+      "-Wall",
+      "-Wcast-align",
+      "-Wcast-qual",
+      "-Wconversion",
+      "-Wctor-dtor-privacy",
+      "-Wdeprecated-copy-dtor",
+      "-Wdouble-promotion",
+      "-Wduplicated-branches", # not in clang++
+      "-Wduplicated-cond", # not in clang++
+      "-Weffc++",
+      "-Wextra",
+      "-Wextra-semi",
+      "-Wfatal-errors",
+      "-Wfloat-equal",
+      "-Wformat=2",
+      "-Wformat-signedness", # not in clang++
+      "-Wformat-truncation=2", # not in clang++
+      "-Wlogical-op", # not in clang++
+      "-Wmisleading-indentation",
+      "-Wno-init-list-lifetime", # not in clang++
+      "-Wnon-virtual-dtor",
+      "-Wnull-dereference",
+      "-Wold-style-cast",
+      "-Woverloaded-virtual",
+      "-Wpedantic",
+      "-Wrestrict", # not in clang++
+      "-Wshadow",
+      "-Wsign-conversion",
+      "-Wsign-promo",
+      "-Wstrict-aliasing",
+      "-Wswitch-default",
+      "-Wswitch-enum",
+      "-Wundef",
+      "-Wunused",
+      "-Wunused-macros",
+      "-Wuseless-cast", # not in clang++
+      "-lstdc++",
+      # "-lm", # https://www.learncpp.com/cpp-tutorial/remainder-and-exponentiation/#comment-567368
+      "-march=native",
+      "-ldl",
+      "-std=c++20",
+      "-pedantic-errors",
+      "-g",
+      "-ggdb",
+      "-O0",
+      "-DDEBUG",
+      "-fasynchronous-unwind-tables",
+      "-fdata-sections",
+      "-fexceptions",
+      "-ffunction-sections",
+      "-fno-common",
+      "-fno-omit-frame-pointer",
+      "-fno-sanitize-recover=all",
+      "-fno-sanitize=alignment",
+      "-fno-sanitize=null",
+      "-fsanitize=address",
+      "-fsanitize=integer",
+      "-fsanitize=signed-integer-overflow",
+      "-fsanitize=float-cast-overflow",
+      "-fsanitize=float-divide-by-zero",
+      "-fsanitize=undefined",
+      "-fsanitize-trap",
+      "-fstack-clash-protection",
+      "-fstack-protector-all",
+      "-fstack-protector-strong",
+      "-fstack-usage",
+      "-fstrict-aliasing"
+    ] # treat all files as C++, enable more warnings
+Diagnostics:
+  UnusedIncludes: Strict
+
+# vim: ft=yaml
