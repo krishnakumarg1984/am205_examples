@@ -10,10 +10,10 @@ int main()
     // Let h be a double-precision floating point number. Change "double" to
     // "float" to carry out the test for a single-precision floating point
     // number.
-    // using mytype = double;
-    using mytype = float;
+    using custom_float_type = double;
+    // using custom_float_type = float;
 
-    mytype h = 1.0;
+    custom_float_type h = 1.0;
 
     // Loop until h becomes less than 1e-20
     while (h > 1e-20)
