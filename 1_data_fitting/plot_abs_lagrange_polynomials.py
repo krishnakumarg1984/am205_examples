@@ -30,16 +30,24 @@ if __name__ == "__main__":
             k, x_vec_plot, x_knotpoints, n_knotpoints - 1
         )
 
+    # plt.figure()
+    # for k in range(n_knotpoints):
+    #     # k = 3
+    #     plt.plot(x_vec_plot, np.abs(lk_vec[k, :]))
+    #     # plt.plot(
+    #     #     x_knotpoints,
+    #     #     kth_lagrange_polynomial(k, x_knotpoints, x_knotpoints, n_knotpoints - 1),
+    #     #     "x",
+    #     # )
+    # plt.xlabel("x")
+    # plt.ylabel("$L_\mathrm{k}(x)$")
+    # plt.grid()
+    # plt.show()
+
+    # Visualise Lebesgue constant
     plt.figure()
-    for k in range(n_knotpoints):
-        # k = 3
-        plt.plot(x_vec_plot, lk_vec[k, :])
-        plt.plot(
-            x_knotpoints,
-            kth_lagrange_polynomial(k, x_knotpoints, x_knotpoints, n_knotpoints - 1),
-            "x",
-        )
+    plt.plot(x_vec_plot, np.sum(np.abs(lk_vec), axis=0))
     plt.xlabel("x")
-    plt.ylabel("$L_\mathrm{k}(x)$")
+    plt.ylabel("$\Sigma |L_\mathrm{k}(x)|$")
     plt.grid()
     plt.show()
