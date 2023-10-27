@@ -5,6 +5,8 @@ from math import exp
 import matplotlib.pyplot as plt
 import numpy as np
 
+from numpy.polynomial.polynomial import polyfit, polyval
+
 
 def f(x: float) -> float:
     return exp(-x)
@@ -26,12 +28,6 @@ def eval_interp(x_interp: float, b_coeffs) -> float:
 
     return y_interp
 
-    # z = b_coeffs[0]
-    # for i in range(1, n_points):
-    #     z *= x_interp
-    #     z += b_coeffs[i]
-    # return z
-
 
 if __name__ == "__main__":
     n_points = 12  # no of data-pairs (x_i, y_i) in the given dataset that is to be fitted with an interpolant
@@ -41,21 +37,26 @@ if __name__ == "__main__":
 
     # solve Vandermonde problem (V b = y)
     V = np.vander(x_vec_given)
-    b_vec_coeffs = np.linalg.solve(V, y_vec_given)  # b_0 x^n + b_1 x^(n-1) + ... + b_n
+    b_coeffs = np.linalg.solve(V, y_vec_given)  # b_0 x^n + b_1 x^(n-1) + ... + b_n
+    b_coeffs_numpy = polyfit(x_vec_given, y_vec_given, n_points - 1)
+    # print(b_coeffs)
+    # print(np.flip(b_coeffs_numpy))
 
     # Add optional random perturbation to coeffs
-    # b_vec_coeffs += 1e-6 * np.random.rand(n_points)
+    # b_coeffs += 1e-6 * np.random.rand(n_points)
 
-    # Fit an interpolant and plot it
+    # Plot the interpolant evaluated at a fine grid of x-values
     n_plotpoints = 301
     x_vec_plot = np.linspace(x_min, x_max, n_plotpoints)
     y_truth_plot = np.array([f(x) for x in x_vec_plot])
-    y_vec_interpolated = np.array([eval_interp(x, b_vec_coeffs) for x in x_vec_plot])
-    y_err = y_vec_interpolated - y_truth_plot
+    # y_vec_interp = np.array([eval_interp(x, b_coeffs) for x in x_vec_plot])
+    # y_vec_interp = polyval(x_vec_plot, np.flip(b_coeffs))
+    y_vec_interp = polyval(x_vec_plot, b_coeffs_numpy)
+    y_err = y_vec_interp - y_truth_plot
 
     # Plot the fitted/interpolated curve and the original data using Matplotlib
     plt.figure()
-    plt.plot(x_vec_plot, y_vec_interpolated, label="Interpolant")
+    plt.plot(x_vec_plot, y_vec_interp, label="Interpolant")
     plt.plot(x_vec_plot, y_truth_plot, label="exp(-x)")
     plt.legend()
     plt.xlabel("x")
