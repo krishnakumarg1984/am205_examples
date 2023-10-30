@@ -1,17 +1,8 @@
 #!/usr/bin/python
 
 
-from math import *
 import matplotlib.pyplot as plt
 import numpy as np
-
-# Vandermonde interpolation function
-# def vand_f(x, b):
-#     fx = b[0]
-#     for i in range(n - 1):
-#         fx *= x
-#         fx += b[i + 1]
-#     return fx
 
 
 def polyval(x_interp: float, b_coeffs: np.ndarray) -> float:
@@ -28,12 +19,6 @@ def polyval(x_interp: float, b_coeffs: np.ndarray) -> float:
         idx += 1
 
     return y_interp
-
-    # z = b_coeffs[0]
-    # for i in range(1, n_points):
-    #     z *= x_interp
-    #     z += b_coeffs[i]
-    # return z
 
 
 # Synthesise data points to be fitted and a truncated Vandermonde matrix
@@ -58,9 +43,10 @@ print(f"Difference between the coefficient values of lsqfit & normal eqn: {b1 - 
 
 # Plot results
 n_plotpoints = 201
+x_plot_min, x_plot_max = x_data_min, x_data_max
 # x_plot_min, x_plot_max = 0.0, 1.0
 # x_plot_min, x_plot_max = -1.5, 2.5
-x_plot_min, x_plot_max = -1.2, 1.5
+# x_plot_min, x_plot_max = -1.2, 1.5
 x_plot = np.linspace(x_plot_min, x_plot_max, n_plotpoints)
 y_lsq_fit_plot = [polyval(x, b1) for x in x_plot]
 y_normal_eqn_plot = [polyval(x, b2) for x in x_plot]

@@ -33,7 +33,8 @@ if __name__ == "__main__":
     )
 
     # Plot results
-    x_plot_min, x_plot_max, n_plotpoints = -1.0, 1.0, 201
+    x_plot_min, x_plot_max = -1.0, 1.0
+    n_plotpoints = 201
     x_plot = np.linspace(x_plot_min, x_plot_max, n_plotpoints)
     y_plot = [sum_bk_exp_kx(x, b) for x in x_plot]  # evaluate the fitted function
 
